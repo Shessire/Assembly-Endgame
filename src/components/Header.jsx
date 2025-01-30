@@ -1,3 +1,5 @@
+import { languages } from "../../languages"
+
 export default function Header () {
     return (
         <section className="Header">
@@ -7,7 +9,14 @@ export default function Header () {
             </p>
             <div className="game-status">
                 <h2>You win!</h2>
-                <p>Well done!</p>
+                <p>Well done! 🎉</p>
+            </div>
+            <div className="language-chips">
+                {
+                    languages.map((l) => (
+                        <span key={l.name} className="chip" style={{ backgroundColor: l.backgroundColor,  color: l.color}}>{l.name}</span>
+                    ))
+                }
             </div>
         </section>
     )
