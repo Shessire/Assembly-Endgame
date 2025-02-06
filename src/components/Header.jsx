@@ -1,10 +1,23 @@
 import { useState } from "react"
+import { clsx } from "clsx"
 import { languages } from "../../languages"
 
 export default function Header () {
     const [currentWord, setCurrentWord] = useState("react")
+    const [guess, setGuess] = useState([])
     
+    const alphabet = "abcdefghijklmnopqrstuvwxyz"
+
     const word = currentWord.split("")
+    const keyboard = alphabet.split("")
+
+    function handleClick (letter){
+        setGuess(prevLetters => (
+            prevLetters.includes(letter)
+            ? prevLetters
+            : [...prevLetters, letter]
+        ))
+    }
 
     return (
         <section className="Header">
@@ -30,6 +43,30 @@ export default function Header () {
                     ))
                 }
             </div>
+            <div className="keyboard">
+                {
+                    keyboard.map((k) => {
+                        const isGuessed = guess.includes(k)
+                        const isCorrect = isGuessed && currentWord.includes(k)
+                        const isWrong = isGuessed && !currentWord.includes(k)
+                        const className = clsx({
+                            correct: isCorrect,
+                            wrong: isWrong
+                        })
+
+                            return (
+                                <button 
+                                    className={className}
+                                    key={k} 
+                                    onClick={() => handleClick(k)}
+                                >
+                                    {k.toUpperCase()}
+                                </button>
+                            )
+                    })
+                }
+            </div>
+            <button className="new-game">New Game</button>
         </section>
     )
 }
