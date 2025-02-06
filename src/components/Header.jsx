@@ -7,9 +7,11 @@ export default function Header () {
     const [guess, setGuess] = useState([])
     
     const wrongGuessCount = guess.filter(letter => !currentWord.includes(letter)).length
-    
-    const alphabet = "abcdefghijklmnopqrstuvwxyz"
+    const isGameWon = currentWord.split("").every(letter => guess.includes(letter))
+    const isGameLost = wrongGuessCount >= languages.length - 1
+    const isGameOver = isGameWon || isGameLost
 
+    const alphabet = "abcdefghijklmnopqrstuvwxyz"
     const word = currentWord.split("")
     const keyboard = alphabet.split("")
 
@@ -76,6 +78,7 @@ export default function Header () {
                                     className={className}
                                     key={k} 
                                     onClick={() => handleClick(k)}
+                                    disabled = {isGameOver}
                                 >
                                     {k.toUpperCase()}
                                 </button>
@@ -83,7 +86,11 @@ export default function Header () {
                     })
                 }
             </div>
-            <button className="new-game">New Game</button>
+            {
+                isGameOver
+                ? <button className="new-game">New Game</button>
+                : null
+            }
         </section>
     )
 }
