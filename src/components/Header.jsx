@@ -33,9 +33,20 @@ export default function Header () {
             </div>
             <div className="language-chips">
                 {
-                    languages.map((l) => (
-                        <span key={l.name} className="chip" style={{ backgroundColor: l.backgroundColor,  color: l.color}}>{l.name}</span>
-                    ))
+                    languages.map((l, index) => {
+                        const isLanguageLost = index < wrongGuessCount
+
+                        return (
+                            <span 
+                                key={l.name} 
+                                className={`chip ${isLanguageLost ? "lost" : ""}`}
+                                style={{ backgroundColor: l.backgroundColor, 
+                                    color: l.color}}
+                            >
+                                {l.name}
+                            </span>
+                        )
+                    })
                 }
             </div>
             <div className="word">
