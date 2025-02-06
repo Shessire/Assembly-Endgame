@@ -39,7 +39,11 @@ export default function Header () {
             <div className="word">
                 {
                     word.map((w, index) => (
-                        <span key={index}>{w.toUpperCase()}</span>
+                        <span 
+                            key={index}
+                        >
+                            {guess.includes(w) ? w.toUpperCase() : ""}
+                        </span>
                     ))
                 }
             </div>
