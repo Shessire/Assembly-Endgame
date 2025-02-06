@@ -6,6 +6,8 @@ export default function Header () {
     const [currentWord, setCurrentWord] = useState("react")
     const [guess, setGuess] = useState([])
     
+    const wrongGuessCount = guess.filter(letter => !currentWord.includes(letter)).length
+    
     const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
     const word = currentWord.split("")
