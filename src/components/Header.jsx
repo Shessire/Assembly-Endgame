@@ -27,6 +27,11 @@ export default function Header () {
         ))
     }
 
+    function newGame () {
+        setCurrentWord(() => getRandomWord())
+        setGuess([])
+    }
+
     const gameStatusClass = clsx("game-status", {
         won: isGameWon,
         lost: isGameLost,
@@ -142,7 +147,7 @@ export default function Header () {
             </div>
             {
                 isGameOver
-                ? <button className="new-game">New Game</button>
+                ? <button className="new-game" onClick={newGame}>New Game</button>
                 : null
             }
         </section>
