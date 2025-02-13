@@ -1,11 +1,29 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { clsx } from "clsx"
 import { languages } from "../../languages"
 import { getFarewellText, getRandomWord } from "../../utils"
+import Confetti from 'react-confetti'
 
 export default function Header () {
     const [currentWord, setCurrentWord] = useState(() => getRandomWord())
     const [guess, setGuess] = useState([])
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight
+    });
+    useEffect(() => {
+        function handleResize() {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight
+            });
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        // Clean up the event listener when the component unmounts
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const numGuessesLeft = languages.length - 1
     const wrongGuessCount = guess.filter(letter => !currentWord.includes(letter)).length
@@ -40,6 +58,15 @@ export default function Header () {
 
     return (
         <section className="Header">
+            {
+                isGameWon
+                && <Confetti 
+                        recycle={false}
+                        numberOfPieces={1000}
+                        width={windowSize.width}
+                        height={windowSize.height}
+                    />
+            }
             <h1>Assembly: Endgame</h1>
             <p>Guess the word within 8 attempts to keep the programming
                 world safe from Assembly!
