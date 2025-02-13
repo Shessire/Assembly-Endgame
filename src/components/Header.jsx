@@ -90,13 +90,19 @@ export default function Header () {
             </div>
             <div className="word">
                 {
-                    word.map((w, index) => (
-                        <span 
-                            key={index}
-                        >
-                            {guess.includes(w) ? w.toUpperCase() : ""}
-                        </span>
-                    ))
+                    word.map((w, index) => {
+                        const shouldRevealLetter = isGameLost || guess.includes(w)
+                        const letterClassName = clsx(
+                            isGameLost && !guess.includes(w) && "missed-letter"
+                        )
+                        return (
+                            <span 
+                                key={index}
+                                className={letterClassName}
+                            >
+                                {shouldRevealLetter ? w.toUpperCase() : ""}
+                            </span>
+                    )})
                 }
             </div>
 

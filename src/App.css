@@ -123,6 +123,10 @@ div.word > span {
     border-bottom: 1px solid #F9F4DA;
 }
 
+div.word > span.missed-letter {
+    color: #ec5d49;
+}
+
 div.keyboard {
     display: flex;
     flex-wrap: wrap;
