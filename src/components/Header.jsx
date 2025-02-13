@@ -38,7 +38,10 @@ export default function Header () {
             <p>Guess the word within 8 attempts to keep the programming
                 world safe from Assembly!
             </p>
-            <section className={gameStatusClass}>
+            <section 
+                aria-live="polite" 
+                role="status" 
+                className={gameStatusClass}>
             {
                 isGameOver ? (
                     isGameWon ? (
@@ -90,6 +93,17 @@ export default function Header () {
                     ))
                 }
             </div>
+            <div 
+                className="sr-only" 
+                aria-live="polite" 
+                role="status"
+            >
+                <p>
+                    Current word: {currentWord.split("").map(letter =>
+                    guess.includes(letter) ? letter + "." : "blank."
+                ).join(" ")}
+                </p>
+            </div>
             <div className="keyboard">
                 {
                     keyboard.map((k) => {
@@ -106,6 +120,8 @@ export default function Header () {
                                     className={className}
                                     key={k} 
                                     onClick={() => handleClick(k)}
+                                    aria-disabled={guess.includes(letter)}
+                                    aria-label={`Letter ${letter}`}
                                     disabled = {isGameOver}
                                 >
                                     {k.toUpperCase()}
