@@ -7,9 +7,10 @@ export default function Header () {
     const [currentWord, setCurrentWord] = useState("react")
     const [guess, setGuess] = useState([])
 
+    const numGuessesLeft = languages.length - 1
     const wrongGuessCount = guess.filter(letter => !currentWord.includes(letter)).length
     const isGameWon = currentWord.split("").every(letter => guess.includes(letter))
-    const isGameLost = wrongGuessCount >= languages.length - 1
+    const isGameLost = wrongGuessCount >= numGuessesLeft
     const isGameOver = isGameWon || isGameLost
     const lastGuessedLetter = guess[guess.length - 1]
     const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
@@ -93,17 +94,26 @@ export default function Header () {
                     ))
                 }
             </div>
+
             <div 
                 className="sr-only" 
                 aria-live="polite" 
                 role="status"
             >
                 <p>
+                    {currentWord.includes(lastGuessedLetter)
+                    ? `Correct! The letter ${lastGuessedLetter} is in the word.`
+                    : `Sorry, the letter ${lastGuessedLetter} is not in the word.`
+                    }
+                    You have {numGuessesLeft} attempts left.
+                </p>
+                <p>
                     Current word: {currentWord.split("").map(letter =>
                     guess.includes(letter) ? letter + "." : "blank."
                 ).join(" ")}
                 </p>
             </div>
+            
             <div className="keyboard">
                 {
                     keyboard.map((k) => {
