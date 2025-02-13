@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { clsx } from "clsx"
 import { languages } from "../../languages"
-import { getFarewellText } from "../../utils"
+import { getFarewellText, getRandomWord } from "../../utils"
 
 export default function Header () {
-    const [currentWord, setCurrentWord] = useState("react")
+    const [currentWord, setCurrentWord] = useState(() => getRandomWord())
     const [guess, setGuess] = useState([])
 
     const numGuessesLeft = languages.length - 1
@@ -113,7 +113,7 @@ export default function Header () {
                 ).join(" ")}
                 </p>
             </div>
-            
+
             <div className="keyboard">
                 {
                     keyboard.map((k) => {
@@ -130,8 +130,8 @@ export default function Header () {
                                     className={className}
                                     key={k} 
                                     onClick={() => handleClick(k)}
-                                    aria-disabled={guess.includes(letter)}
-                                    aria-label={`Letter ${letter}`}
+                                    aria-disabled={guess.includes(k)}
+                                    aria-label={`Letter ${k}`}
                                     disabled = {isGameOver}
                                 >
                                     {k.toUpperCase()}
